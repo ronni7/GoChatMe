@@ -12,17 +12,18 @@ function loadMap() {
 	request.onload = function() {
 		if (this.readyState === 4 && this.status === 200) {
 			jObj = JSON.parse(request.responseText);
-				for (var i = 0; i < jObj.length; i++) { //jesli jest wiecej niz jeden obiekt iteruj po tablicy			
+				//for (var i = 0; i < jObj.length; i++) { //jesli jest wiecej niz jeden obiekt iteruj po tablicy			
 					//przykład jak wyciagnąc wartosci i zapisac je w zmiennej typu Object
-					var info = {
-						ID : jObj[i].id,
-						Imie: jObj[i].name
-						//etc					
-					}
-					alert(info);
+					//var info = {
+					//	ID : jObj[i].id,
+					//	Imie: jObj[i].name
+					//	//etc					
+					//}
+					//alert(info);
 			
 									
-				}
+				//}
+			alert(jObj);
 		} else if (this.status === 400) {
 			alert("blad serwera/url");
 		} else {
