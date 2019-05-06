@@ -1,10 +1,7 @@
 package test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hello.Application;
 
-import hello.entities.User;
-import hello.utilities.enums.GENDER;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = Application.class)
+@SpringBootTest(classes = main.java.hello.Application.class)
 @AutoConfigureMockMvc
 @Transactional
 public class MainControllerTests {
@@ -34,14 +31,14 @@ public class MainControllerTests {
     private ObjectMapper mapper;
 
        @Test public void ShouldReturnUser() throws Exception {
-           User u=new User(
+           main.java.hello.entities.User u=new main.java.hello.entities.User(
                    "imie",
                    "nazwisko",
                    "login",
                    "nick",
                    "TajneHaslo1".toCharArray(),
                    "email@johnny.com",
-                   GENDER.MALE
+                   main.java.hello.utilities.enums.GENDER.MALE
            );
 
                   mockMvc.perform(post("http://localhost:8080/goChatMe/register")

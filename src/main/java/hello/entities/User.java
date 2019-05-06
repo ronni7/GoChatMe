@@ -1,6 +1,6 @@
-package hello.entities;
+package main.java.hello.entities;
 
-import hello.utilities.enums.GENDER;
+import main.java.hello.utilities.enums.GENDER;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

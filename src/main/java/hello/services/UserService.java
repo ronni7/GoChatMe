@@ -1,6 +1,7 @@
-package hello.services;
+package main.java.hello.services;
 
-import hello.entities.User;
+
+import main.java.hello.entities.User;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package hello.utilities.enums;
+package main.java.hello.utilities.enums;
 
 public enum GENDER {
     MALE,

@@ -1,8 +1,9 @@
-package hello.services;
+package main.java.hello.services;
 
-import hello.entities.User;
 
-import hello.repositories.UserRepository;
+
+import main.java.hello.entities.User;
+import main.java.hello.repositories.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;
 
