@@ -1,13 +1,13 @@
-package main.java.hello.repositories;
+package hello.repositories;
 
-import main.java.hello.entities.User;
+import hello.entities.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
 
 public interface UserRepository extends CrudRepository<User, Integer> {
-            User findByLoginAndPassword(String login, char[] password);
+            User findByLoginAndPassword(String login,char[] password);
 
             List<User> findAll();
 

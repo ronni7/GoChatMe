@@ -1,4 +1,4 @@
-package main.java.hello.utilities;
+package hello.utilities;
 
 public  class KeyGenerator {
 

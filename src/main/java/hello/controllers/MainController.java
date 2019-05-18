@@ -1,13 +1,16 @@
-package main.java.hello.controllers;
+package hello.controllers;
 
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import main.java.hello.entities.User;
-import main.java.hello.services.UserServiceImpl;
+import hello.entities.User;
+import hello.services.UserServiceImpl;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;

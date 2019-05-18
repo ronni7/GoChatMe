@@ -1,7 +1,6 @@
-package main.java.hello.services;
+package hello.services;
 
-
-import main.java.hello.entities.User;
+import hello.entities.User;
 
 import java.util.List;
 
@@ -11,4 +10,5 @@ public interface UserService {
     User registerNewUser(User u);
 
     boolean logUserIn(String login, char[] password);
+
 }
