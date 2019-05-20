@@ -15,7 +15,6 @@ public class ChatController {
     public ChatController(ChatServiceImpl chatService) {
         this.chatService = chatService;
     }
-
     @GetMapping(path = "/messages")
     public @ResponseBody
     List<Message> getAllUsers(@RequestParam int channelID)
