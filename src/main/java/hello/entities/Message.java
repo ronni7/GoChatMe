@@ -1,8 +1,8 @@
 package hello.entities;
 
 public class Message {
-    int senderID;
-    String messageContent;
+    private int senderID;
+    private String messageContent;
 
     public Message(int senderID, String messageContent) {
         this.senderID = senderID;

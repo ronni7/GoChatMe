@@ -6,12 +6,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"hello"})
 public class Application {
    // private static final Logger log =  LoggerFactory.getLogger(Application.class);
     public static void main(String[] args) {
