@@ -1,16 +1,14 @@
 package hello.entities;
 
-public class Message {
+public class MessageOutput {
     private String from;
     private String text;
+    private String time;
 
-    public Message(String from, String text) {
+    public MessageOutput(String from, String text, String time) {
         this.from = from;
         this.text = text;
-    }
-
-    public Message() {
-
+        this.time = time;
     }
 
     public String getFrom() {
@@ -29,11 +27,20 @@ public class Message {
         this.text = text;
     }
 
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
     @Override
     public String toString() {
-        return "Message{" +
+        return "MessageOutput{" +
                 "from='" + from + '\'' +
                 ", text='" + text + '\'' +
+                ", time='" + time + '\'' +
                 '}';
     }
 }

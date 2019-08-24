@@ -6,11 +6,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hello.entities.User;
 import hello.services.UserServiceImpl;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -18,7 +14,7 @@ import java.util.List;
 
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "/*")
 @RequestMapping(path = "/goChatMe")
 
 public class MainController {
@@ -29,7 +25,6 @@ public class MainController {
 
     public MainController(UserServiceImpl userService) {
         this.userService = userService;
-
     }
 
     @GetMapping(path = "/hello")
@@ -53,18 +48,7 @@ public class MainController {
 
     @PostMapping(path = "/register")
     public @ResponseBody
-    User registerNewUser(@RequestParam String s) {
-        User u=null;
-        try {
-
-          u= objectMapper.readValue(s,User.class);
-        }  catch (JsonParseException e) {
-            System.out.println("it doesnt work ");
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    User registerNewUser(@RequestBody User u) {
         return userService.registerNewUser(u);
     }
 
