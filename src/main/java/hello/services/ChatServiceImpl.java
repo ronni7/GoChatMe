@@ -3,6 +3,8 @@ package hello.services;
 import hello.entities.Channel;
 import hello.entities.Message;
 import hello.entities.MessageOutput;
+import hello.utilities.enums.MESSAGETYPE;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
@@ -16,15 +18,15 @@ public class ChatServiceImpl implements ChatService {
 
     public ChatServiceImpl() {
         this.channelList=new ArrayList<>();
-    List<Message> list=   new ArrayList<>();
-    list.add(new Message("1","lol wiadomosc"));
-    list.add(new Message("1","lol odpowiedz"));
+        List<Message> list=   new ArrayList<>();
+        list.add(new Message("1","lol wiadomosc", MESSAGETYPE.NORMAL));
+        list.add(new Message("1","lol odpowiedz",MESSAGETYPE.NORMAL));
         channelList.add(
                 new Channel(
                         1,
                         "Podstawowka",
                         list)
-                );
+        );
 
 
     }
@@ -35,17 +37,19 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public List<Message> getChannelMessages(int channelID) {
-       return channelList.stream().filter(channel -> channel.getChannelID()==channelID).findFirst().get().getMessageList();
-    }
-
-    @Override
-    public Message sayHello() {
-        return new Message("server","Hello in my chatroom, friend");
+        return channelList.stream().filter(channel -> channel.getChannelID()==channelID).findFirst().get().getMessageList();
     }
 
     @Override
     public MessageOutput readAndSend(Message message) {
-            String time = new SimpleDateFormat("HH:mm").format(new Date());
-            return new MessageOutput(message.getFrom(), message.getText(), time);
+        String time = new SimpleDateFormat("HH:mm").format(new Date());
+        return new MessageOutput(message.getFrom(), message.getText(), time);
+    }
+
+    @Override
+    public MessageOutput sendGreeting(SimpMessageHeaderAccessor headerAccessor) {
+        String username=headerAccessor.getNativeHeader("username").get(0);
+        String time = new SimpleDateFormat("HH:mm").format(new Date());
+        return new MessageOutput("Server", username +" has joined channel", time);
     }
 }

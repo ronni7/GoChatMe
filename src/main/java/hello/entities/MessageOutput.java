@@ -11,6 +11,10 @@ public class MessageOutput {
         this.time = time;
     }
 
+    public MessageOutput() {
+
+    }
+
     public String getFrom() {
         return from;
     }

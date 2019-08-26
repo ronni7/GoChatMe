@@ -6,8 +6,11 @@ import hello.entities.MessageOutput;
 import hello.services.ChatServiceImpl;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @Controller
@@ -26,10 +29,15 @@ public class ChatController {
     }
 
     @MessageMapping("/chat")
-    @SendTo("/general/messages")
-    public MessageOutput respondToGeneral(Message message){
-       return chatService.readAndSend(message);
-   }
+    @SendTo("/general/messages/")
+    public MessageOutput respondToGeneral(Message message) {
+        return chatService.readAndSend(message);
+    }
 
+    @SubscribeMapping("/general/messages/")
+    @SendTo("/general/messages/")
+    public MessageOutput addUser(SimpMessageHeaderAccessor headerAccessor) {
+        return chatService.sendGreeting(headerAccessor);
+    }
 
 }
