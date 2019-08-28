@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface ChatService {
     List<Message> getChannelMessages(int channelID);
-    MessageOutput readAndSend(Message message) ;
+    MessageOutput dispatchMessage(Message message) ;
     MessageOutput sendGreeting(SimpMessageHeaderAccessor headerAccessor);
 }

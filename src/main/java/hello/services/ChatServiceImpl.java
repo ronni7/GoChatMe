@@ -41,7 +41,7 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public MessageOutput readAndSend(Message message) {
+    public MessageOutput dispatchMessage(Message message) {
         String time = new SimpleDateFormat("HH:mm").format(new Date());
         return new MessageOutput(message.getFrom(), message.getText(), time);
     }
