@@ -1,0 +1,11 @@
+[
+{"type":"header","version":"4.8.4","comment":"Export to JSON plugin for PHPMyAdmin"},
+{"type":"database","name":"gochatme"},
+{"type":"table","name":"hibernate_sequence","database":"gochatme","data":
+[
+{"next_val":"3"},
+{"next_val":"3"},
+{"next_val":"3"}
+]
+}
+]

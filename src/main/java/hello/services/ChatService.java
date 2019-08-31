@@ -1,13 +1,12 @@
 package hello.services;
 
 import hello.entities.Message;
-import hello.entities.MessageOutput;
+import hello.entities.MessageOutputDTO;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 
-import java.util.List;
-
 public interface ChatService {
-    List<Message> getChannelMessages(int channelID);
-    MessageOutput dispatchMessage(Message message) ;
-    MessageOutput sendGreeting(SimpMessageHeaderAccessor headerAccessor);
+    MessageOutputDTO dispatchMessage(Message message);
+
+    MessageOutputDTO sendGreeting(SimpMessageHeaderAccessor headerAccessor);
+
 }

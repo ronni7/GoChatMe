@@ -4,6 +4,7 @@ import hello.entities.User;
 import hello.repositories.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAll() {
-      return  userRepository.findAll();
+        return userRepository.findAll();
     }
 
     @Override
@@ -33,9 +34,9 @@ public class UserServiceImpl implements UserService {
     public boolean logUserIn(String login, char[] password) {
 
         ArrayList<User> list = new ArrayList<>(userRepository.findByLogin(login));
-        for (User u: list)
+        for (User u : list)
             if (BCrypt.checkpw(String.valueOf(password), String.valueOf(u.getPassword())))
                 return true;
-return false;
+        return false;
     }
 }

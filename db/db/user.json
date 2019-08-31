@@ -1,0 +1,10 @@
+[
+{"type":"header","version":"4.8.4","comment":"Export to JSON plugin for PHPMyAdmin"},
+{"type":"database","name":"gochatme"},
+{"type":"table","name":"user","database":"gochatme","data":
+[
+{"id":"1","email":"email@johnny.com","login":"login","name":"imie","nickname":"nick","password":"$2a$10$hx5YeD31soTUtYtQLzQwuOCLYcltHex40HG4jfsqa6Q26CIIoSRGe","sex":"0","surname":"nazwisko"},
+{"id":"23","email":"admin@admin.com","login":"admin","name":"admin","nickname":"Admin1","password":"$2a$10$xFCb3N1551dfovj2gpsvm.nIu1QOQEPHsFGcMmjGAzOab0ixdQ3tK","sex":"0","surname":"dzik"}
+]
+}
+]

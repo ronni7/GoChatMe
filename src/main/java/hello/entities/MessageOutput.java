@@ -1,26 +1,50 @@
 package hello.entities;
 
-public class MessageOutput {
-    private String from;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
+import javax.persistence.*;
+import java.io.Serializable;
+
+@Entity
+public class MessageOutput implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+    private String sender;
     private String text;
     private String time;
-
-    public MessageOutput(String from, String text, String time) {
-        this.from = from;
-        this.text = text;
-        this.time = time;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "channelID")
+    @JsonBackReference
+    @NotFound(action = NotFoundAction.IGNORE)
+    private Channel channel;
 
     public MessageOutput() {
-
     }
 
-    public String getFrom() {
-        return from;
+    public MessageOutput(String sender, String text, String time, Channel channel) {
+        this.sender = sender;
+        this.text = text;
+        this.time = time;
+        this.channel = channel;
+    }
+    public Integer getId() {
+        return id;
     }
 
-    public void setFrom(String from) {
-        this.from = from;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender;
     }
 
     public String getText() {
@@ -39,12 +63,22 @@ public class MessageOutput {
         this.time = time;
     }
 
+    public Channel getChannel() {
+        return channel;
+    }
+
+    public void setChannel(Channel channel) {
+        this.channel = channel;
+    }
+
     @Override
     public String toString() {
         return "MessageOutput{" +
-                "from='" + from + '\'' +
+                "id=" + id +
+                ", sender='" + sender + '\'' +
                 ", text='" + text + '\'' +
                 ", time='" + time + '\'' +
+                ", channel=" + channel +
                 '}';
     }
 }

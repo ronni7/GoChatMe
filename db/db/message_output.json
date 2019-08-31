@@ -1,0 +1,12 @@
+[
+{"type":"header","version":"4.8.4","comment":"Export to JSON plugin for PHPMyAdmin"},
+{"type":"database","name":"gochatme"},
+{"type":"table","name":"message_output","database":"gochatme","data":
+[
+{"id":"1","sender":"User1","text":"hi","time":"23:47","channelid":"1"},
+{"id":"2","sender":"User2","text":"hello","time":"23:48","channelid":"1"},
+{"id":"3","sender":"User1","text":"bye","time":"23:49","channelid":"1"},
+{"id":"4","sender":"User1","text":"hey","time":"23:59","channelid":"2"}
+]
+}
+]

@@ -1,15 +1,11 @@
 package hello.controllers;
 
-
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hello.entities.User;
 import hello.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 
 
@@ -30,20 +26,20 @@ public class MainController {
     @GetMapping(path = "/hello")
     public @ResponseBody
     String hello() {
-        return "Hello World" ;
+        return "Hello World";
     }
+
     @GetMapping(path = "/all")
     public @ResponseBody
-    List<User> getAllUsers()
-    {
+    List<User> getAllUsers() {
         return userService.findAll();
     }
 
     @PostMapping(path = "/login")
     public @ResponseBody
-    boolean logUserIn(@RequestParam String password,@RequestParam String login) {
+    boolean logUserIn(@RequestParam String password, @RequestParam String login) {
 
-    return userService.logUserIn(login,password.toCharArray());
+        return userService.logUserIn(login, password.toCharArray());
     }
 
     @PostMapping(path = "/register")
