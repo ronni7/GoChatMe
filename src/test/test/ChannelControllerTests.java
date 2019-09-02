@@ -51,7 +51,7 @@ public class ChannelControllerTests {
     @Test
     public void ShouldReturnPrivateChannelTO() throws Exception {
 
-        String json = this.mockMvc.perform(post("http://localhost:8080/goChatMe/channel/createPrivateChannel")
+        String json = this.mockMvc.perform(post("https://localhost:8444/goChatMe/channel/createPrivateChannel")
                 .param("user1ID", "1")
                 .param("user2ID", "2"))
                 .andDo(print()).andExpect(status().isOk())
