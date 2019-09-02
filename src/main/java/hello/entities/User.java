@@ -10,15 +10,15 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 @Entity
-public class User implements Serializable{
+public class User implements Serializable {
     public User() {
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -96,7 +96,7 @@ public class User implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
     private String name;
     private String surname;
     private String login;

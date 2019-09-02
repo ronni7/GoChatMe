@@ -2,6 +2,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import hello.Application;
 import hello.entities.MessageOutputDTO;
+import hello.entities.PrivateChannelTO;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +16,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -46,4 +48,18 @@ public class ChannelControllerTests {
 
     }
 
+    @Test
+    public void ShouldReturnPrivateChannelTO() throws Exception {
+
+        String json = this.mockMvc.perform(post("http://localhost:8080/goChatMe/channel/createPrivateChannel")
+                .param("user1ID", "1")
+                .param("user2ID", "2"))
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNotEmpty()).andReturn().getResponse().getContentAsString();
+        TypeFactory mapCollectionType = mapper.getTypeFactory();
+        PrivateChannelTO privateChannelTO = mapper.readValue(json, mapCollectionType.constructType(PrivateChannelTO.class));
+        Assert.assertTrue(privateChannelTO.isExists());
+        Assert.assertEquals(60, privateChannelTO.getToken().length());
+
+    }
 }

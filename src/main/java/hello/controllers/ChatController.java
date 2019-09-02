@@ -35,4 +35,11 @@ public class ChatController {
         return chatService.sendGreeting(headerAccessor);
     }
 
+    // TODO: 2019-09-02 Add Implementation and MQ
+    @SubscribeMapping("/chatroom/private/{token}/")
+    @SendTo("/chatroom/private/{token}/")
+    public MessageOutputDTO addUserToPrivateChat(SimpMessageHeaderAccessor headerAccessor) {
+        return chatService.sendGreeting(headerAccessor);
+    }
+
 }

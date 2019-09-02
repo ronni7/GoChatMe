@@ -2,6 +2,7 @@ package hello.controllers;
 
 import hello.entities.Channel;
 import hello.entities.MessageOutputDTO;
+import hello.entities.PrivateChannelTO;
 import hello.services.ChannelServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ public class ChannelController {
 
     @GetMapping(path = "/messagesByChannelID")
     public @ResponseBody
-    List<MessageOutputDTO> getChannelMessages(@RequestParam int channelID) {
+    List<MessageOutputDTO> getChannelMessages(@RequestParam long channelID) {
         return channelService.getChannelMessages(channelID);
     }
 
@@ -27,6 +28,12 @@ public class ChannelController {
     public @ResponseBody
     List<Channel> getChannels() {
         return channelService.getChannels();
+    }
+
+    @PostMapping(path = "/createPrivateChannel")
+    public @ResponseBody
+    PrivateChannelTO createPrivateChannel(String user1ID, String user2ID) {
+        return channelService.createPrivateChannel(user1ID, user2ID);
     }
 
 }

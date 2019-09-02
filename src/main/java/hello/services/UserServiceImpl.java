@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User registerNewUser(User u) {
-        if (userRepository.findByLogin(u.getLogin()).size() == 1)
+        if (userRepository.findByLogin(u.getLogin()).size() == 1 || userRepository.findByNickname(u.getNickname()).size() == 1)
             return new User();
         u.setPassword(BCrypt.hashpw(String.valueOf(u.getPassword()), BCrypt.gensalt()).toCharArray());
         return userRepository.save(u);

@@ -12,7 +12,7 @@ import java.util.List;
 public class Channel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer channelID;
+    private Long channelID;
     private String name;
     @OneToMany(mappedBy = "channel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @NotFound(action = NotFoundAction.IGNORE)
@@ -34,11 +34,11 @@ public class Channel implements Serializable {
     public Channel() {
     }
 
-    public Integer getChannelID() {
+    public Long getChannelID() {
         return channelID;
     }
 
-    public void setChannelID(Integer channelID) {
+    public void setChannelID(Long channelID) {
         this.channelID = channelID;
     }
 

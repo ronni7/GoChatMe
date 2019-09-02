@@ -8,8 +8,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-public class MessageOutput implements Serializable {
-
+public class PrivateMessageOutput implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -17,19 +16,16 @@ public class MessageOutput implements Serializable {
     private String text;
     private String time;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "channelID")
+    @JoinColumn(name = "token")
     @JsonBackReference
     @NotFound(action = NotFoundAction.IGNORE)
-    private Channel channel;
+    private PrivateChannel privateChannel;
 
-    public MessageOutput() {
-    }
-
-    public MessageOutput(String sender, String text, String time, Channel channel) {
+    public PrivateMessageOutput(String sender, String text, String time, PrivateChannel privateChannel) {
         this.sender = sender;
         this.text = text;
         this.time = time;
-        this.channel = channel;
+        this.privateChannel = privateChannel;
     }
 
     public Long getId() {
@@ -64,22 +60,22 @@ public class MessageOutput implements Serializable {
         this.time = time;
     }
 
-    public Channel getChannel() {
-        return channel;
+    public PrivateChannel getPrivateChannel() {
+        return privateChannel;
     }
 
-    public void setChannel(Channel channel) {
-        this.channel = channel;
+    public void setPrivateChannel(PrivateChannel privateChannel) {
+        this.privateChannel = privateChannel;
     }
 
     @Override
     public String toString() {
-        return "MessageOutput{" +
+        return "PrivateMessageOutput{" +
                 "id=" + id +
                 ", sender='" + sender + '\'' +
                 ", text='" + text + '\'' +
                 ", time='" + time + '\'' +
-                ", channel=" + channel +
+                ", privateChannel=" + privateChannel +
                 '}';
     }
 }
