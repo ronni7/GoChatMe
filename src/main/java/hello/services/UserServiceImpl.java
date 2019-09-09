@@ -31,6 +31,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Long getUserIDByNickname(String nickname) {
+        List<User> userList = userRepository.findByNickname(nickname);
+        if (userList.size() == 1)
+            return userList.get(0).getId();
+        return -1L;
+    }
+
+    @Override
     public boolean logUserIn(String login, char[] password) {
 
         ArrayList<User> list = new ArrayList<>(userRepository.findByLogin(login));
@@ -38,5 +46,10 @@ public class UserServiceImpl implements UserService {
             if (BCrypt.checkpw(String.valueOf(password), String.valueOf(u.getPassword())))
                 return true;
         return false;
+    }
+
+    @Override
+    public String getNicknameByUserID(long userID) {
+        return userRepository.findById(userID).get().getNickname();
     }
 }

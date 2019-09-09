@@ -12,14 +12,14 @@ import java.util.List;
 @Component
 public class ChannelServiceImpl implements ChannelService {
     private ChannelRepository channelRepository;
-
-    public ChannelServiceImpl(ChannelRepository channelRepository, PrivateChannelRepository privateChannelRepository) {
-        this.channelRepository = channelRepository;
-        this.privateChannelRepository = privateChannelRepository;
-    }
-
+    private UserServiceImpl userService;
     private PrivateChannelRepository privateChannelRepository;
 
+    public ChannelServiceImpl(ChannelRepository channelRepository, UserServiceImpl userServiceImpl, PrivateChannelRepository privateChannelRepository) {
+        this.channelRepository = channelRepository;
+        this.userService = userServiceImpl;
+        this.privateChannelRepository = privateChannelRepository;
+    }
 
     @Override
     public List<Channel> getChannels() {
@@ -27,14 +27,15 @@ public class ChannelServiceImpl implements ChannelService {
     }
 
     @Override
-    public PrivateChannelTO createPrivateChannel(String user1ID, String user2ID) {
-
+    public PrivateChannelTO createPrivateChannel(long senderID, String destinationUserNickname) {
+        System.out.println("senderID = " + senderID);
+       long user2ID= userService.getUserIDByNickname(destinationUserNickname);
         for (PrivateChannel p : privateChannelRepository.findAll())
-            if (BCrypt.checkpw(user1ID + user2ID, String.valueOf(p.getToken())))
+            /*if (BCrypt.checkpw(senderID + user2ID, String.valueOf(p.getToken())))*/ //TODO encrypted chatroom token handling
+            if(("token"+senderID+user2ID).equals(p.getToken()))
                 return new PrivateChannelTO(p.getToken(), true);
-
         PrivateChannel privateChannel = new PrivateChannel();
-        String token = BCrypt.hashpw(user1ID + user2ID, BCrypt.gensalt());
+        String token = "token"+senderID+user2ID;
         privateChannel.setToken(token);
         return new PrivateChannelTO(privateChannelRepository.save(privateChannel).getToken(), false);
     }

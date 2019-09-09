@@ -11,5 +11,5 @@ public interface ChannelService {
 
     List<Channel> getChannels();
 
-    PrivateChannelTO createPrivateChannel(String user1ID, String user2ID);
+    PrivateChannelTO createPrivateChannel(long senderID, String destinationUserNickname);
 }

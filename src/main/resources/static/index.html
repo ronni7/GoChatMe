@@ -8,6 +8,35 @@
     </script>
 </head>
 <body onload="disconnect()">
+<input type="text" id="myID" placeholder="set your ID"/>
+<div>
+    <button id="enableNotifications" onclick="enableNotifications()">Enable notifications</button>
+
+</div>
+<div>
+    <label for="notifications">Notifications</label>
+    <input id="notifications" type="checkbox" disabled/>
+</div>
+<div>
+    <label for="privateFrom">My Nickname:</label>
+    <input type="text" id="privateFrom" placeholder="To be set after logged"/>
+</div>
+<div>
+    <label for="chatWith">My Nickname:</label>
+    <input type="text" id="chatWith" placeholder="I want to chat with(enter username)"/>
+    <button id="chatWithButton" onclick="createChannel()">Chat with user!</button>
+</div>
+<div>
+    <input id="privateText" type="text" placeholder="Enter private message..."/>
+    <button id="privateMessage" onclick="sendPrivateMessage(document.getElementById('chatWith').value);">Send</button>
+</div>
+<div>
+    <br>
+    <label id="privateResponseLabel" for="privateResponse">Private chat:</label>
+    <p id="privateResponse"></p>
+</div>
+
+
 <div>
     <div>
         <label for="from1">Nickname:</label>
@@ -15,7 +44,7 @@
     </div>
     <br/>
     <div>
-        <button  id="connect1" onclick="connect(1);">Connect to channel 1</button>
+        <button id="connect1" onclick="connect(1);">Connect to channel 1</button>
         <button id="disconnect1" disabled="disabled" onclick="disconnect(1);">
             Disconnect
         </button>
@@ -24,7 +53,7 @@
 
     <div id="conversationDiv1">
         <input type="text" id="text1" placeholder="Write a message..."/>
-        <button  id="sendMessage1" onclick="sendMessage(1);">Send</button>
+        <button id="sendMessage1" onclick="sendMessage(1);">Send</button>
         <br>
         <label id="responseLabel1" for="response1">Conversation:</label>
         <p id="response1"></p>
@@ -37,7 +66,7 @@
     </div>
     <br/>
     <div>
-        <button  id="connect2" onclick="connect(2);">Connect to channel 2</button>
+        <button id="connect2" onclick="connect(2);">Connect to channel 2</button>
         <button id="disconnect2" disabled="disabled" onclick="disconnect(2);">
             Disconnect
         </button>
@@ -46,7 +75,7 @@
 
     <div id="conversationDiv2">
         <input type="text" id="text2" placeholder="Write a message..."/>
-        <button  id="sendMessage2" onclick="sendMessage(2);">Send</button>
+        <button id="sendMessage2" onclick="sendMessage(2);">Send</button>
         <br>
         <label id="responseLabel2" for="response2">Conversation:</label>
         <p id="response2"></p>

@@ -32,8 +32,8 @@ public class ChannelController {
 
     @PostMapping(path = "/createPrivateChannel")
     public @ResponseBody
-    PrivateChannelTO createPrivateChannel(String user1ID, String user2ID) {
-        return channelService.createPrivateChannel(user1ID, user2ID);
+    PrivateChannelTO createPrivateChannel(long senderID, String destinationUserNickname) {
+        return channelService.createPrivateChannel(senderID, destinationUserNickname);
     }
 
 }

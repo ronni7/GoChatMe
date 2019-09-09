@@ -42,7 +42,7 @@ public class MainControllerTests {
                 GENDER.MALE
 
         );
-        mockMvc.perform(post("http://localhost:8080/goChatMe/register").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("https://localhost:8444/goChatMe/register").contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(user).getBytes()))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(jsonPath("$").value(Matchers.instanceOf(LinkedHashMap.class)));
@@ -52,14 +52,14 @@ public class MainControllerTests {
     @Test
     public void ShouldReturnAllUsers() throws Exception {
 
-        this.mockMvc.perform(get("http://localhost:8080/goChatMe/all"))
+        this.mockMvc.perform(get("https://localhost:8444/goChatMe/all"))
                               .andDo(print()).andExpect(status().isOk());
 
     }
     @Test
     public void ShouldReturnTrueWhenUserHasBeenLoggedSuccessfully() throws Exception {
 
-        this.mockMvc.perform(post("http://localhost:8080/goChatMe/login")
+        this.mockMvc.perform(post("https://localhost:8444/goChatMe/login")
                 .param("password", "TajneHaslo1")
                 .param("login", "login"))
                 .andDo(print()).andExpect(status().isOk())
