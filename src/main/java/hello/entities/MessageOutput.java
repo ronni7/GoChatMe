@@ -72,14 +72,4 @@ public class MessageOutput implements Serializable {
         this.channel = channel;
     }
 
-    @Override
-    public String toString() {
-        return "MessageOutput{" +
-                "id=" + id +
-                ", sender='" + sender + '\'' +
-                ", text='" + text + '\'' +
-                ", time='" + time + '\'' +
-                ", channel=" + channel +
-                '}';
-    }
 }

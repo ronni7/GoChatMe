@@ -1,8 +1,8 @@
 package hello.controllers;
 
+import hello.DTO.MessageOutputDTO;
+import hello.TO.PrivateChannelTO;
 import hello.entities.Channel;
-import hello.entities.MessageOutputDTO;
-import hello.entities.PrivateChannelTO;
 import hello.services.ChannelServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,10 +18,16 @@ public class ChannelController {
         this.channelService = channelService;
     }
 
-    @GetMapping(path = "/messagesByChannelID")
+    @GetMapping(path = "/lastMessagesByChannelID")
     public @ResponseBody
     List<MessageOutputDTO> getChannelMessages(@RequestParam long channelID) {
         return channelService.getChannelMessages(channelID);
+    }
+
+    @GetMapping(path = "/lastPrivateMessagesByChannelID")
+    public @ResponseBody
+    List<MessageOutputDTO> getPrivateChannelMessages(@RequestParam long channelID) {
+        return channelService.getPrivateChannelMessages(channelID);
     }
 
     @GetMapping(path = "/channels")

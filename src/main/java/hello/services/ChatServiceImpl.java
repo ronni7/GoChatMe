@@ -1,9 +1,15 @@
 package hello.services;
 
-import hello.entities.InvitationMessage;
-import hello.entities.InvitationMessageOutput;
-import hello.entities.Message;
-import hello.entities.MessageOutputDTO;
+import hello.DTO.MessageOutputDTO;
+import hello.TO.InvitationMessageOutputTO;
+import hello.TO.InvitationMessageTO;
+import hello.TO.MessageTO;
+import hello.entities.MessageOutput;
+import hello.entities.PrivateMessageOutput;
+import hello.repositories.ChannelRepository;
+import hello.repositories.MessageRepository;
+import hello.repositories.PrivateChannelRepository;
+import hello.repositories.PrivateMessageRepository;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Component;
 
@@ -13,15 +19,32 @@ import java.util.Date;
 @Component
 public class ChatServiceImpl implements ChatService {
     private UserServiceImpl userService;
-    public ChatServiceImpl(UserServiceImpl userService) {
+    private MessageRepository messageRepository;
+    private PrivateMessageRepository privateMessageRepository;
+    private ChannelRepository channelRepository;
+    private PrivateChannelRepository privateChannelRepository;
+
+    public ChatServiceImpl(UserServiceImpl userService, MessageRepository messageRepository, PrivateMessageRepository privateMessageRepository, ChannelRepository channelRepository, PrivateChannelRepository privateChannelRepository) {
         this.userService = userService;
+        this.messageRepository = messageRepository;
+        this.privateMessageRepository = privateMessageRepository;
+        this.channelRepository = channelRepository;
+        this.privateChannelRepository = privateChannelRepository;
     }
 
 
     @Override
-    public MessageOutputDTO dispatchMessage(Message message) {
+    public MessageOutputDTO dispatchMessage(MessageTO messageTO, Long channelID) {
+        String time = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date());
+        System.out.println(" = " + messageRepository.save(new MessageOutput(messageTO.getFrom(), messageTO.getText(), time, channelRepository.getChannelByChannelID(channelID))));
+        return new MessageOutputDTO(messageTO.getFrom(), messageTO.getText(), time.substring(time.length() - 5));
+    }
+
+    @Override
+    public MessageOutputDTO dispatchPrivateMessage(MessageTO messageTO, String token) {
         String time = new SimpleDateFormat("HH:mm").format(new Date());
-        return new MessageOutputDTO(message.getFrom(), message.getText(), time);
+        System.out.println(" = " + privateMessageRepository.save(new PrivateMessageOutput(messageTO.getFrom(), messageTO.getText(), time, privateChannelRepository.findByToken(token))));
+        return new MessageOutputDTO(messageTO.getFrom(), messageTO.getText(), time);
     }
 
     @Override
@@ -32,10 +55,10 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public InvitationMessageOutput dispatchInvitation(long senderID, InvitationMessage invitationMessage) {
-        String from=userService.getNicknameByUserID(senderID);
-        long receiverID= userService.getUserIDByNickname(invitationMessage.getReceiver());
-        return new InvitationMessageOutput(from,invitationMessage.getToken(),String.valueOf(receiverID));
+    public InvitationMessageOutputTO dispatchInvitation(long senderID, InvitationMessageTO invitationMessageTO) {
+        String from = userService.getNicknameByUserID(senderID);
+        long receiverID = userService.getUserIDByNickname(invitationMessageTO.getReceiver());
+        return new InvitationMessageOutputTO(from, invitationMessageTO.getToken(), String.valueOf(receiverID));
     }
 
 }

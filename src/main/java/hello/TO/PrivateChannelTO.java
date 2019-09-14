@@ -1,17 +1,27 @@
-package hello.entities;
+package hello.TO;
 
 import java.io.Serializable;
 
 public class PrivateChannelTO implements Serializable {
+    private Long channelID;
     private String token;
     private boolean exists;
+
+    public PrivateChannelTO(Long channelID, String token, boolean exists) {
+        this.channelID = channelID;
+        this.token = token;
+        this.exists = exists;
+    }
 
     public PrivateChannelTO() {
     }
 
-    public PrivateChannelTO(String token, boolean exists) {
-        this.token = token;
-        this.exists = exists;
+    public Long getChannelID() {
+        return channelID;
+    }
+
+    public void setChannelID(Long channelID) {
+        this.channelID = channelID;
     }
 
     public String getToken() {

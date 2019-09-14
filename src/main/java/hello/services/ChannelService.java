@@ -1,8 +1,8 @@
 package hello.services;
 
 import hello.entities.Channel;
-import hello.entities.MessageOutputDTO;
-import hello.entities.PrivateChannelTO;
+import hello.DTO.MessageOutputDTO;
+import hello.TO.PrivateChannelTO;
 
 import java.util.List;
 
@@ -12,4 +12,6 @@ public interface ChannelService {
     List<Channel> getChannels();
 
     PrivateChannelTO createPrivateChannel(long senderID, String destinationUserNickname);
+
+    List<MessageOutputDTO> getPrivateChannelMessages(long channelID);
 }

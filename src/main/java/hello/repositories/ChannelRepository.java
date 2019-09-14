@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface ChannelRepository extends CrudRepository<Channel, Long> {
     List<Channel> findAll();
+
+    Channel getChannelByChannelID(Long channelID);
 }

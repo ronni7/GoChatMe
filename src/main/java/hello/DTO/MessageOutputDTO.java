@@ -1,4 +1,4 @@
-package hello.entities;
+package hello.DTO;
 
 public class MessageOutputDTO {
     private String from;

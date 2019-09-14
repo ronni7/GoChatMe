@@ -1,13 +1,13 @@
-package hello.entities;
+package hello.TO;
 
 import hello.utilities.enums.MESSAGETYPE;
 
-public class Message {
+public class MessageTO {
     private String from;
     private String text;
     private MESSAGETYPE messageType;
 
-    public Message(String from, String text, MESSAGETYPE messageType) {
+    public MessageTO(String from, String text, MESSAGETYPE messageType) {
         this.from = from;
         this.text = text;
         this.messageType = messageType;
@@ -19,10 +19,6 @@ public class Message {
 
     public void setMessageType(MESSAGETYPE messageType) {
         this.messageType = messageType;
-    }
-
-    public Message() {
-
     }
 
     public String getFrom() {
@@ -43,7 +39,7 @@ public class Message {
 
     @Override
     public String toString() {
-        return "Message{" +
+        return "MessageTO{" +
                 "from='" + from + '\'' +
                 ", text='" + text + '\'' +
                 ", messageType=" + messageType +

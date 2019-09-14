@@ -15,17 +15,20 @@ public class PrivateMessageOutput implements Serializable {
     private String sender;
     private String text;
     private String time;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "token")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "channelID")
     @JsonBackReference
     @NotFound(action = NotFoundAction.IGNORE)
-    private PrivateChannel privateChannel;
+    private PrivateChannel privateChannel = new PrivateChannel(); //todo problem with toString()
 
     public PrivateMessageOutput(String sender, String text, String time, PrivateChannel privateChannel) {
         this.sender = sender;
         this.text = text;
         this.time = time;
         this.privateChannel = privateChannel;
+    }
+
+    public PrivateMessageOutput() {
     }
 
     public Long getId() {
@@ -68,14 +71,4 @@ public class PrivateMessageOutput implements Serializable {
         this.privateChannel = privateChannel;
     }
 
-    @Override
-    public String toString() {
-        return "PrivateMessageOutput{" +
-                "id=" + id +
-                ", sender='" + sender + '\'' +
-                ", text='" + text + '\'' +
-                ", time='" + time + '\'' +
-                ", privateChannel=" + privateChannel +
-                '}';
-    }
 }

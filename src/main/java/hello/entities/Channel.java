@@ -82,16 +82,5 @@ public class Channel implements Serializable {
         this.adultsOnly = adultsOnly;
     }
 
-    @Override
-    public String toString() {
-        return "Channel{" +
-                "channelID=" + channelID +
-                ", name='" + name + '\'' +
-                ", messageList=" + messageList +
-                ", description='" + description + '\'' +
-                ", active=" + active +
-                ", adultsOnly=" + adultsOnly +
-                '}';
-    }
 }
 

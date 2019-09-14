@@ -1,9 +1,13 @@
 package hello.services;
 
-import hello.entities.*;
+import hello.DTO.MessageOutputDTO;
+import hello.TO.PrivateChannelTO;
+import hello.entities.Channel;
+import hello.entities.MessageOutput;
+import hello.entities.PrivateChannel;
+import hello.entities.PrivateMessageOutput;
 import hello.repositories.ChannelRepository;
 import hello.repositories.PrivateChannelRepository;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -28,22 +32,37 @@ public class ChannelServiceImpl implements ChannelService {
 
     @Override
     public PrivateChannelTO createPrivateChannel(long senderID, String destinationUserNickname) {
-        System.out.println("senderID = " + senderID);
-       long user2ID= userService.getUserIDByNickname(destinationUserNickname);
+        long user2ID = userService.getUserIDByNickname(destinationUserNickname);
         for (PrivateChannel p : privateChannelRepository.findAll())
             /*if (BCrypt.checkpw(senderID + user2ID, String.valueOf(p.getToken())))*/ //TODO encrypted chatroom token handling
-            if(("token"+senderID+user2ID).equals(p.getToken()))
-                return new PrivateChannelTO(p.getToken(), true);
+            if (("token" + senderID + user2ID).equals(p.getToken()))
+                return new PrivateChannelTO(p.getChannelID(), p.getToken(), true);
         PrivateChannel privateChannel = new PrivateChannel();
-        String token = "token"+senderID+user2ID;
+        System.out.println("privateChannel = " + privateChannel);
+        String token = "token" + senderID + user2ID;
         privateChannel.setToken(token);
-        return new PrivateChannelTO(privateChannelRepository.save(privateChannel).getToken(), false);
+        privateChannel = privateChannelRepository.save(privateChannel);
+        return new PrivateChannelTO(privateChannel.getChannelID(), privateChannel.getToken(), false);
     }
 
     @Override
     public List<MessageOutputDTO> getChannelMessages(long channelID) {
+        /*String time = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date()); todo
+        SimpleDateFormat simpleDateFormat= new SimpleDateFormat("dd-MM-yyyy HH:mm");*/
         return convertToDTO(channelRepository.findById(channelID).get().getMessageList());
 
+    }
+
+    @Override
+    public List<MessageOutputDTO> getPrivateChannelMessages(long channelID) {
+        return convertPrivateToDTO(privateChannelRepository.findById(channelID).get().getMessageList());
+
+    }
+
+    private List<MessageOutputDTO> convertPrivateToDTO(List<PrivateMessageOutput> messageList) {
+        List<MessageOutputDTO> list = new ArrayList<>();
+        messageList.forEach(messageOutput -> list.add(new MessageOutputDTO(messageOutput.getSender(), messageOutput.getText(), messageOutput.getTime())));
+        return list;
     }
 
     private List<MessageOutputDTO> convertToDTO(List<MessageOutput> messageList) {

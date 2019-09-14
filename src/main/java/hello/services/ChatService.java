@@ -1,15 +1,17 @@
 package hello.services;
 
-import hello.entities.InvitationMessage;
-import hello.entities.InvitationMessageOutput;
-import hello.entities.Message;
-import hello.entities.MessageOutputDTO;
+import hello.TO.InvitationMessageTO;
+import hello.TO.InvitationMessageOutputTO;
+import hello.TO.MessageTO;
+import hello.DTO.MessageOutputDTO;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 
 public interface ChatService {
-    MessageOutputDTO dispatchMessage(Message message);
+    MessageOutputDTO dispatchMessage(MessageTO messageTO, Long channelID);
+
+    MessageOutputDTO dispatchPrivateMessage(MessageTO messageTO, String token);
 
     MessageOutputDTO sendGreeting(SimpMessageHeaderAccessor headerAccessor);
 
-    InvitationMessageOutput dispatchInvitation(long senderID, InvitationMessage invitationMessage);
+    InvitationMessageOutputTO dispatchInvitation(long senderID, InvitationMessageTO invitationMessageTO);
 }

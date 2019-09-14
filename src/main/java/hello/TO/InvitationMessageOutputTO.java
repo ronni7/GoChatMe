@@ -1,16 +1,16 @@
-package hello.entities;
+package hello.TO;
 
 import java.io.Serializable;
 
-public class InvitationMessageOutput implements Serializable {
+public class InvitationMessageOutputTO implements Serializable {
     private String from;
     private String token;
     private String receiverID;
 
-    public InvitationMessageOutput() {
+    public InvitationMessageOutputTO() {
     }
 
-    public InvitationMessageOutput(String from, String token, String receiverID) {
+    public InvitationMessageOutputTO(String from, String token, String receiverID) {
         this.from = from;
         this.token = token;
         this.receiverID = receiverID;

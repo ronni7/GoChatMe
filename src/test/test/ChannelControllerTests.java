@@ -1,8 +1,8 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import hello.Application;
-import hello.entities.MessageOutputDTO;
-import hello.entities.PrivateChannelTO;
+import hello.DTO.MessageOutputDTO;
+import hello.TO.PrivateChannelTO;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,7 +40,17 @@ public class ChannelControllerTests {
 
     @Test
     public void ShouldReturnAllMessagesByChannelID() throws Exception {
-        String json = this.mockMvc.perform(get("https://localhost:8444/goChatMe/channel/messagesByChannelID?channelID=1"))
+        String json = this.mockMvc.perform(get("https://localhost:8444/goChatMe/channel/lastMessagesByChannelID?channelID=1"))
+                .andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$").isNotEmpty()).andExpect(jsonPath("$").isArray()).andReturn().getResponse().getContentAsString();
+        TypeFactory mapCollectionType = mapper.getTypeFactory();
+        List<MessageOutputDTO> messageOutputDTOS = mapper.readValue(json, mapCollectionType.constructCollectionType(List.class, MessageOutputDTO.class));
+        Assert.assertTrue(!messageOutputDTOS.isEmpty());
+
+    }
+
+    @Test
+    public void ShouldReturnAllPrivateMessagesByChannelID() throws Exception {
+        String json = this.mockMvc.perform(get("https://localhost:8444/goChatMe/channel/lastPrivateMessagesByChannelID?channelID=20"))
                 .andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$").isNotEmpty()).andExpect(jsonPath("$").isArray()).andReturn().getResponse().getContentAsString();
         TypeFactory mapCollectionType = mapper.getTypeFactory();
         List<MessageOutputDTO> messageOutputDTOS = mapper.readValue(json, mapCollectionType.constructCollectionType(List.class, MessageOutputDTO.class));
@@ -58,6 +68,7 @@ public class ChannelControllerTests {
                 .andExpect(jsonPath("$").isNotEmpty()).andReturn().getResponse().getContentAsString();
         TypeFactory mapCollectionType = mapper.getTypeFactory();
         PrivateChannelTO privateChannelTO = mapper.readValue(json, mapCollectionType.constructType(PrivateChannelTO.class));
+        System.out.println("privateChannelTO = " + privateChannelTO);
         Assert.assertTrue(privateChannelTO.isExists());
 /*
         Assert.assertEquals(60, privateChannelTO.getToken().length()); todo restore after fixing token usage

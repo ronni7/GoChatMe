@@ -1,13 +1,11 @@
-package hello.entities;
+package hello.TO;
 
-import java.io.Serializable;
-
-public class InvitationMessage  {
+public class InvitationMessageTO {
     private String from;
     private String token;
     private String receiver;
 
-    public InvitationMessage(String from, String token, String receiver) {
+    public InvitationMessageTO(String from, String token, String receiver) {
         this.from = from;
         this.token = token;
         this.receiver = receiver;

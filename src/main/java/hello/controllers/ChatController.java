@@ -1,9 +1,9 @@
 package hello.controllers;
 
 
-import hello.entities.InvitationMessage;
-import hello.entities.Message;
-import hello.entities.MessageOutputDTO;
+import hello.DTO.MessageOutputDTO;
+import hello.TO.InvitationMessageTO;
+import hello.TO.MessageTO;
 import hello.services.ChatServiceImpl;
 import hello.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,14 +33,14 @@ public class ChatController {
 
     @MessageMapping("/chat/{roomID}")
     @SendTo("/chatroom/{roomID}/")
-    public MessageOutputDTO dispatchMessage(@DestinationVariable String roomID, Message message) {
-        return chatService.dispatchMessage(message);
+    public MessageOutputDTO dispatchMessage(@DestinationVariable String roomID, MessageTO message) {
+        return chatService.dispatchMessage(message, Long.valueOf(roomID));
     }
 
     @MessageMapping("/chat/private/{token}")
     @SendTo("/chatroom/private/{token}/")
-    public MessageOutputDTO dispatchPrivateMessage(@DestinationVariable String token, Message message) {
-        return chatService.dispatchMessage(message);
+    public MessageOutputDTO dispatchPrivateMessage(@DestinationVariable String token, MessageTO message) {
+        return chatService.dispatchPrivateMessage(message, token);
     }
 
     @SubscribeMapping("/chatroom/{roomID}/")
@@ -49,7 +49,6 @@ public class ChatController {
         return chatService.sendGreeting(headerAccessor);
     }
 
-    // TODO: 2019-09-02 Add Implementation and MQ
     @SubscribeMapping("/chatroom/private/{token}/")
     @SendTo("/chatroom/private/{token}/")
     public MessageOutputDTO addUserToPrivateChat(SimpMessageHeaderAccessor headerAccessor) {
@@ -58,9 +57,9 @@ public class ChatController {
 
     @MessageMapping("/chat/notifications/{senderID}")
     @SendTo("/chatroom/notifications/{receiverID}/")
-    public void dispatchInvitation(@DestinationVariable long senderID, InvitationMessage invitationMessage) {
-        long receiverID = userService.getUserIDByNickname(invitationMessage.getReceiver());
-        simpMessagingTemplate.convertAndSend("/chatroom/notifications/" + receiverID + "/", chatService.dispatchInvitation(senderID, invitationMessage));
+    public void dispatchInvitation(@DestinationVariable long senderID, InvitationMessageTO invitationmessage) {
+        long receiverID = userService.getUserIDByNickname(invitationmessage.getReceiver());
+        simpMessagingTemplate.convertAndSend("/chatroom/notifications/" + receiverID + "/", chatService.dispatchInvitation(senderID, invitationmessage));
 
     }
 }
