@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 09 Wrz 2019, 20:49
+-- Czas generowania: 14 Wrz 2019, 22:58
 -- Wersja serwera: 10.1.37-MariaDB
 -- Wersja PHP: 7.3.0
 
@@ -59,9 +59,9 @@ CREATE TABLE `hibernate_sequence` (
 --
 
 INSERT INTO `hibernate_sequence` (`next_val`) VALUES
-(21),
-(21),
-(21);
+(44),
+(44),
+(44);
 
 -- --------------------------------------------------------
 
@@ -85,7 +85,13 @@ INSERT INTO `message_output` (`id`, `sender`, `text`, `time`, `channelid`) VALUE
 (1, 'User1', 'hi', '23:47', 1),
 (2, 'User2', 'hello', '23:48', 1),
 (3, 'User1', 'bye', '23:49', 1),
-(4, 'User1', 'hey', '23:59', 2);
+(4, 'User1', 'hey', '23:59', 2),
+(22, 'Admin1', 'aaa', '15:13', NULL),
+(23, 'nick', 'Hello World!', '15:16', NULL),
+(24, 'Marian', 'Hello Darkness my old friend...', '15:19', NULL),
+(25, '', 'I\'ve come to talk with you again', '15:21', NULL),
+(26, 'nick', 'Private Hello Darkness my old friend', '15:22', NULL),
+(43, 'aaaaaaaac', 'bababab', '14-09-2019 22:42', 1);
 
 -- --------------------------------------------------------
 
@@ -104,6 +110,7 @@ CREATE TABLE `private_channel` (
 
 INSERT INTO `private_channel` (`channelid`, `token`) VALUES
 (20, 'token16'),
+(21, 'token123'),
 (18, 'token\"1\"-1'),
 (19, 'token1-1');
 
@@ -118,8 +125,24 @@ CREATE TABLE `private_message_output` (
   `sender` varchar(255) DEFAULT NULL,
   `text` varchar(255) DEFAULT NULL,
   `time` varchar(255) DEFAULT NULL,
-  `token` bigint(20) DEFAULT NULL
+  `channelid` bigint(20) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Zrzut danych tabeli `private_message_output`
+--
+
+INSERT INTO `private_message_output` (`id`, `sender`, `text`, `time`, `channelid`) VALUES
+(27, 'Dario1', 'Hello Private World', '15:37', NULL),
+(28, 'Dario1', 'Private message', '18:52', NULL),
+(29, 'Dario1', 'Hello Private World', '18:58', 20),
+(30, 'Dario1', 'aaaaaaaaa', '19:11', 20),
+(31, 'Dario1', 'aaaaaaaa', '19:13', 20),
+(32, 'Dario1', 'Hello Private World!!!', '19:16', 20),
+(33, 'nick', 'Hello There', '19:17', 20),
+(34, 'nick', 'Hello', '19:19', 20),
+(35, 'Dario1', 'Hello', '19:23', 20),
+(36, 'Dario1', 'aaaaaaaaa', '19:24', 20);
 
 -- --------------------------------------------------------
 
@@ -175,7 +198,7 @@ ALTER TABLE `private_channel`
 --
 ALTER TABLE `private_message_output`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `FK71vuhor9wnqh5ccq9fjrvq0xv` (`token`);
+  ADD KEY `FK1bubrcwhghh0ofud7so03gpvl` (`channelid`);
 
 --
 -- Indeksy dla tabeli `user`
