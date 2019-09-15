@@ -39,13 +39,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean logUserIn(String login, char[] password) {
+    public User logUserIn(String login, char[] password) {
 
         ArrayList<User> list = new ArrayList<>(userRepository.findByLogin(login));
         for (User u : list)
             if (BCrypt.checkpw(String.valueOf(password), String.valueOf(u.getPassword())))
-                return true;
-        return false;
+                return u;
+        return null;
     }
 
     @Override

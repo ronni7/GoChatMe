@@ -11,7 +11,7 @@ public interface UserService {
 
     Long getUserIDByNickname(String nickname);
 
-    boolean logUserIn(String login, char[] password);
+    User logUserIn(String login, char[] password);
 
     String getNicknameByUserID(long parseInt);
 }

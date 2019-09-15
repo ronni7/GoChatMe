@@ -37,7 +37,7 @@ public class MainController {
 
     @PostMapping(path = "/login")
     public @ResponseBody
-    boolean logUserIn(@RequestParam String password, @RequestParam String login) {
+    User logUserIn(@RequestParam String password, @RequestParam String login) {
 
         return userService.logUserIn(login, password.toCharArray());
     }
