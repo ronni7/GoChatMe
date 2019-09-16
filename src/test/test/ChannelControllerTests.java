@@ -75,4 +75,21 @@ public class ChannelControllerTests {
 */
 
     }
+    @Test
+    public void ShouldReturnSamePrivateChannelTOAsAbove() throws Exception {
+
+        String json = this.mockMvc.perform(post("https://localhost:8444/goChatMe/channel/createPrivateChannel")
+                .param("senderID", "6")
+                .param("destinationUserNickname", "nick"))
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNotEmpty()).andReturn().getResponse().getContentAsString();
+        TypeFactory mapCollectionType = mapper.getTypeFactory();
+        PrivateChannelTO privateChannelTO = mapper.readValue(json, mapCollectionType.constructType(PrivateChannelTO.class));
+        System.out.println("privateChannelTO = " + privateChannelTO);
+        Assert.assertTrue(privateChannelTO.isExists());
+/*
+        Assert.assertEquals(60, privateChannelTO.getToken().length()); todo restore after fixing token usage
+*/
+
+    }
 }

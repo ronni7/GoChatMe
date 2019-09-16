@@ -33,12 +33,18 @@ public class ChannelServiceImpl implements ChannelService {
     @Override
     public PrivateChannelTO createPrivateChannel(long senderID, String destinationUserNickname) {
         long user2ID = userService.getUserIDByNickname(destinationUserNickname);
+        if (senderID > user2ID) {
+            long temp=senderID;
+            senderID=user2ID;
+            user2ID=temp;
+        }
+        System.out.println("senderID = " + senderID);
+        System.out.println("user2ID = " + user2ID);
         for (PrivateChannel p : privateChannelRepository.findAll())
             /*if (BCrypt.checkpw(senderID + user2ID, String.valueOf(p.getToken())))*/ //TODO encrypted chatroom token handling
             if (("token" + senderID + user2ID).equals(p.getToken()))
                 return new PrivateChannelTO(p.getChannelID(), p.getToken(), true);
         PrivateChannel privateChannel = new PrivateChannel();
-        System.out.println("privateChannel = " + privateChannel);
         String token = "token" + senderID + user2ID;
         privateChannel.setToken(token);
         privateChannel = privateChannelRepository.save(privateChannel);

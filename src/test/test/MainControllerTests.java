@@ -1,8 +1,10 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import hello.Application;
 import hello.entities.User;
 import hello.utilities.enums.GENDER;
 import org.hamcrest.Matchers;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,11 +61,15 @@ public class MainControllerTests {
     @Test
     public void ShouldReturnTrueWhenUserHasBeenLoggedSuccessfully() throws Exception {
 
-        this.mockMvc.perform(post("https://localhost:8444/goChatMe/login")
+        String json =  this.mockMvc.perform(post("https://localhost:8444/goChatMe/login")
                 .param("password", "TajneHaslo1")
                 .param("login", "login"))
                 .andDo(print()).andExpect(status().isOk())
-                .andExpect(jsonPath("$").isBoolean())
-                .andExpect(jsonPath("$").value(Matchers.equalTo(true))); //returns true if validation is successful
+                .andExpect(jsonPath("$").isNotEmpty()).andReturn().getResponse().getContentAsString();
+        TypeFactory mapCollectionType;
+        mapCollectionType = mapper.getTypeFactory();
+        User user =  mapper.readValue(json, mapCollectionType.constructType(User.class));
+        Assert.assertEquals(1, (long) user.getId());
+
     }
 }
