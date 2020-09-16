@@ -15,16 +15,16 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
-
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Controller
-@CrossOrigin(origins = "/*")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ChatController {
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final ChatServiceImpl chatService;
     private final UserServiceImpl userService;
 
-    @Autowired
     public ChatController(ChatServiceImpl chatService, UserServiceImpl userService, SimpMessagingTemplate simpMessagingTemplate) {
         this.chatService = chatService;
         this.userService = userService;
@@ -32,19 +32,19 @@ public class ChatController {
     }
 
     @MessageMapping("/chat/{roomID}")
-    @SendTo("/chatroom/{roomID}/")
+    @SendTo("/chatroom/{roomID}")
     public MessageOutputDTO dispatchMessage(@DestinationVariable String roomID, MessageTO message) {
         return chatService.dispatchMessage(message, Long.valueOf(roomID));
     }
 
     @MessageMapping("/chat/private/{token}")
-    @SendTo("/chatroom/private/{token}/")
+    @SendTo("/chatroom/private/{token}")
     public MessageOutputDTO dispatchPrivateMessage(@DestinationVariable String token, MessageTO message) {
         return chatService.dispatchPrivateMessage(message, token);
     }
 
-    @SubscribeMapping("/chatroom/{roomID}/")
-    @SendTo("/chatroom/{roomID}/")
+    @SubscribeMapping("/chatroom/{roomID}")
+    @SendTo("/chatroom/{roomID}")
     public MessageOutputDTO addUser(SimpMessageHeaderAccessor headerAccessor) {
         return chatService.sendGreeting(headerAccessor);
     }

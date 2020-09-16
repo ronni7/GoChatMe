@@ -10,17 +10,17 @@ import java.util.List;
 
 
 @RestController
-@CrossOrigin(origins = "/*")
+@CrossOrigin(origins = "*")
 @RequestMapping(path = "/goChatMe")
 
 public class MainController {
 
     private final UserServiceImpl userService;
-    @Autowired
-    ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
-    public MainController(UserServiceImpl userService) {
+    public MainController(UserServiceImpl userService, ObjectMapper objectMapper) {
         this.userService = userService;
+        this.objectMapper = objectMapper;
     }
 
     @GetMapping(path = "/hello")
@@ -29,9 +29,16 @@ public class MainController {
         return "Hello World";
     }
 
+    @Deprecated
     @GetMapping(path = "/all")
     public @ResponseBody
     List<User> getAllUsers() {
+        return userService.findAll();
+    }
+
+    @GetMapping(path = "/users")
+    public @ResponseBody
+    List<User> getUsers() {
         return userService.findAll();
     }
 

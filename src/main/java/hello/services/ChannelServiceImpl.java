@@ -38,8 +38,6 @@ public class ChannelServiceImpl implements ChannelService {
             senderID=user2ID;
             user2ID=temp;
         }
-        System.out.println("senderID = " + senderID);
-        System.out.println("user2ID = " + user2ID);
         for (PrivateChannel p : privateChannelRepository.findAll())
             /*if (BCrypt.checkpw(senderID + user2ID, String.valueOf(p.getToken())))*/ //TODO encrypted chatroom token handling
             if (("token" + senderID + user2ID).equals(p.getToken()))

@@ -1,3 +1,5 @@
+package test;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import hello.Application;
@@ -68,7 +70,6 @@ public class ChannelControllerTests {
                 .andExpect(jsonPath("$").isNotEmpty()).andReturn().getResponse().getContentAsString();
         TypeFactory mapCollectionType = mapper.getTypeFactory();
         PrivateChannelTO privateChannelTO = mapper.readValue(json, mapCollectionType.constructType(PrivateChannelTO.class));
-        System.out.println("privateChannelTO = " + privateChannelTO);
         Assert.assertTrue(privateChannelTO.isExists());
 /*
         Assert.assertEquals(60, privateChannelTO.getToken().length()); todo restore after fixing token usage
@@ -85,7 +86,6 @@ public class ChannelControllerTests {
                 .andExpect(jsonPath("$").isNotEmpty()).andReturn().getResponse().getContentAsString();
         TypeFactory mapCollectionType = mapper.getTypeFactory();
         PrivateChannelTO privateChannelTO = mapper.readValue(json, mapCollectionType.constructType(PrivateChannelTO.class));
-        System.out.println("privateChannelTO = " + privateChannelTO);
         Assert.assertTrue(privateChannelTO.isExists());
 /*
         Assert.assertEquals(60, privateChannelTO.getToken().length()); todo restore after fixing token usage
