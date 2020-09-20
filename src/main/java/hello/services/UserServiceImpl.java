@@ -52,4 +52,9 @@ public class UserServiceImpl implements UserService {
     public String getNicknameByUserID(long userID) {
         return userRepository.findById(userID).get().getNickname();
     }
+
+    @Override
+    public List<User> findUsersByName(String name) {
+        return userRepository.findByNicknameContains(name);
+    }
 }

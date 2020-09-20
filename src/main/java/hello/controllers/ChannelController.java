@@ -35,11 +35,22 @@ public class ChannelController {
     List<Channel> getChannels() {
         return channelService.getChannels();
     }
+@GetMapping(path = "/channelsByName")
+    public @ResponseBody
+    List<Channel> getChannelsByName(@RequestParam String name) {
+        return channelService.getChannelsByName(name);
+    }
 
     @PostMapping(path = "/createPrivateChannel")
     public @ResponseBody
     PrivateChannelTO createPrivateChannel(long senderID, String destinationUserNickname) {
         return channelService.createPrivateChannel(senderID, destinationUserNickname);
+    }
+
+    @PostMapping(path = "/addChannel")
+    public @ResponseBody
+    Channel addChannel(@RequestBody Channel channel) {
+        return channelService.addChannel(channel);
     }
 
 }

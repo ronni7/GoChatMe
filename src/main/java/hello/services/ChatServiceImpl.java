@@ -36,13 +36,14 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public MessageOutputDTO dispatchMessage(MessageTO messageTO, Long channelID) {
         String time = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date());
-//        wyzej dodac channelID
+        messageRepository.save(new MessageOutput(messageTO.getFrom(), messageTO.getText(), time, channelRepository.getChannelByChannelID(1L)));
         return new MessageOutputDTO(messageTO.getFrom(), messageTO.getText(), time.substring(time.length() - 5));
     }
 
     @Override
     public MessageOutputDTO dispatchPrivateMessage(MessageTO messageTO, String token) {
         String time = new SimpleDateFormat("HH:mm").format(new Date());
+        privateMessageRepository.save(new PrivateMessageOutput(messageTO.getFrom(), messageTO.getText(), time, privateChannelRepository.findByToken(token)));
         return new MessageOutputDTO(messageTO.getFrom(), messageTO.getText(), time);
     }
 

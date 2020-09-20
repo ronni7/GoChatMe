@@ -34,9 +34,9 @@ public class ChannelServiceImpl implements ChannelService {
     public PrivateChannelTO createPrivateChannel(long senderID, String destinationUserNickname) {
         long user2ID = userService.getUserIDByNickname(destinationUserNickname);
         if (senderID > user2ID) {
-            long temp=senderID;
-            senderID=user2ID;
-            user2ID=temp;
+            long temp = senderID;
+            senderID = user2ID;
+            user2ID = temp;
         }
         for (PrivateChannel p : privateChannelRepository.findAll())
             /*if (BCrypt.checkpw(senderID + user2ID, String.valueOf(p.getToken())))*/ //TODO encrypted chatroom token handling
@@ -61,6 +61,16 @@ public class ChannelServiceImpl implements ChannelService {
     public List<MessageOutputDTO> getPrivateChannelMessages(long channelID) {
         return convertPrivateToDTO(privateChannelRepository.findById(channelID).get().getMessageList());
 
+    }
+
+    @Override
+    public Channel addChannel(Channel channel) {
+        return channelRepository.save(channel);
+    }
+
+    @Override
+    public List<Channel> getChannelsByName(String name) {
+        return channelRepository.findChannelByNameContains(name);
     }
 
     private List<MessageOutputDTO> convertPrivateToDTO(List<PrivateMessageOutput> messageList) {

@@ -42,6 +42,12 @@ public class MainController {
         return userService.findAll();
     }
 
+    @GetMapping(path = "/usersByName")
+    public @ResponseBody
+    List<User> getUsersByName(@RequestParam String name) {
+        return userService.findUsersByName(name);
+    }
+
     @PostMapping(path = "/login")
     public @ResponseBody
     User logUserIn(@RequestParam String password, @RequestParam String login) {

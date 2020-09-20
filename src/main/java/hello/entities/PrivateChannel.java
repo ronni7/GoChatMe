@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 public class PrivateChannel implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long channelID;
     private String token;
     @OneToMany(mappedBy = "privateChannel", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

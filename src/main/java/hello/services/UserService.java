@@ -14,4 +14,6 @@ public interface UserService {
     User logUserIn(String login, char[] password);
 
     String getNicknameByUserID(long parseInt);
+
+    List<User> findUsersByName(String name);
 }

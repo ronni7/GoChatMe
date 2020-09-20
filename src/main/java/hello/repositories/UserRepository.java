@@ -13,5 +13,8 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     List<User> findByLogin(String login);
 
+    List<User> findByNicknameContains(String nickname);
+
     List<User> findByNickname(String nickname);
+
 }

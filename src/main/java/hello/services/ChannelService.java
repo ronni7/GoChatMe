@@ -14,4 +14,8 @@ public interface ChannelService {
     PrivateChannelTO createPrivateChannel(long senderID, String destinationUserNickname);
 
     List<MessageOutputDTO> getPrivateChannelMessages(long channelID);
+
+    Channel addChannel(Channel channel);
+
+    List<Channel> getChannelsByName(String name);
 }
