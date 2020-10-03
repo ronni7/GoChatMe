@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Controller
-@CrossOrigin(origins = "http://localhost:4200")
 public class ChatController {
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final ChatServiceImpl chatService;

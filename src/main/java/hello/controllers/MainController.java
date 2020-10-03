@@ -10,7 +10,6 @@ import java.util.List;
 
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping(path = "/goChatMe")
 
 public class MainController {

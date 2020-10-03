@@ -10,7 +10,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/goChatMe/channel")
-@CrossOrigin(origins = "*")
 public class ChannelController {
     private final ChannelServiceImpl channelService;
 
