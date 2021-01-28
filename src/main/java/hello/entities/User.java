@@ -1,6 +1,6 @@
 package hello.entities;
 
-import hello.utilities.enums.GENDER;
+import hello.utilities.enums.Gender;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +23,7 @@ public class User implements Serializable {
     private String nickname;
     private char[] password;
     private String email;
-    private GENDER sex;
+    private Gender sex;
 
     public Long getId() {
         return id;
@@ -73,15 +73,15 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public GENDER getSex() {
+    public Gender getSex() {
         return sex;
     }
 
-    public void setSex(GENDER sex) {
+    public void setSex(Gender sex) {
         this.sex = sex;
     }
 
-    public User(String name, String surname, String login, String nickname, char[] password, String email, GENDER sex) {
+    public User(String name, String surname, String login, String nickname, char[] password, String email, Gender sex) {
         this.name = name;
         this.surname = surname;
         this.login = login;

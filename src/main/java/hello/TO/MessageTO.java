@@ -1,23 +1,23 @@
 package hello.TO;
 
-import hello.utilities.enums.MESSAGETYPE;
+import hello.utilities.enums.MessageType;
 
 public class MessageTO {
     private String from;
     private String text;
-    private MESSAGETYPE messageType;
+    private MessageType messageType;
 
-    public MessageTO(String from, String text, MESSAGETYPE messageType) {
+    public MessageTO(String from, String text, MessageType messageType) {
         this.from = from;
         this.text = text;
         this.messageType = messageType;
     }
 
-    public MESSAGETYPE getMessageType() {
+    public MessageType getMessageType() {
         return messageType;
     }
 
-    public void setMessageType(MESSAGETYPE messageType) {
+    public void setMessageType(MessageType messageType) {
         this.messageType = messageType;
     }
 

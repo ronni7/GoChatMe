@@ -1,16 +1,22 @@
 package hello.TO;
 
+import hello.DTO.MessageOutputDTO;
+import hello.entities.PrivateMessageOutput;
+
 import java.io.Serializable;
+import java.util.List;
 
 public class PrivateChannelTO implements Serializable {
     private Long channelID;
     private String token;
-    private boolean exists;
+    private boolean accepted;
+    private List<MessageOutputDTO> messageList;
 
-    public PrivateChannelTO(Long channelID, String token, boolean exists) {
+    public PrivateChannelTO(Long channelID, String token, boolean accepted, List<MessageOutputDTO> messageList) {
         this.channelID = channelID;
         this.token = token;
-        this.exists = exists;
+        this.accepted = accepted;
+        this.messageList = messageList;
     }
 
     public PrivateChannelTO() {
@@ -32,12 +38,19 @@ public class PrivateChannelTO implements Serializable {
         this.token = token;
     }
 
-
-    public boolean isExists() {
-        return exists;
+    public boolean isAccepted() {
+        return accepted;
     }
 
-    public void setExists(boolean exists) {
-        this.exists = exists;
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
+    }
+
+    public List<MessageOutputDTO> getMessageList() {
+        return messageList;
+    }
+
+    public void setMessageList(List<MessageOutputDTO> messageList) {
+        this.messageList = messageList;
     }
 }

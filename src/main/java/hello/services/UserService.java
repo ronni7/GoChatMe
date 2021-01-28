@@ -7,7 +7,7 @@ import java.util.List;
 public interface UserService {
     List<User> findAll();
 
-    User registerNewUser(User u);
+    User registerNewUser(User user);
 
     Long getUserIDByNickname(String nickname);
 
