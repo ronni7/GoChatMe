@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import hello.Application;
 import hello.entities.User;
-import hello.utilities.enums.GENDER;
+import hello.utilities.enums.Gender;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
@@ -43,7 +43,7 @@ public class MainControllerTests {
                 "Nickname",
                 "hasloJestTajne".toCharArray(),
                 "emaissl@johnny.com",
-                GENDER.MALE
+                Gender.MALE
 
         );
         mockMvc.perform(post("https://localhost:8444/goChatMe/register").contentType(MediaType.APPLICATION_JSON)

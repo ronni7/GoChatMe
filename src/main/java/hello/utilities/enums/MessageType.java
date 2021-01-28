@@ -1,6 +1,6 @@
 package hello.utilities.enums;
 
-public enum MESSAGETYPE {
+public enum MessageType {
     LEAVE,
     NORMAL
 }

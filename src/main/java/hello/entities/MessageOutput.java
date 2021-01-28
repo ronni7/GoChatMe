@@ -16,7 +16,7 @@ public class MessageOutput implements Serializable {
     private String sender;
     private String text;
     private String time;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "channelID")
     @JsonBackReference
     @NotFound(action = NotFoundAction.IGNORE)

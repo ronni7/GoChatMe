@@ -70,7 +70,7 @@ public class ChannelControllerTests {
                 .andExpect(jsonPath("$").isNotEmpty()).andReturn().getResponse().getContentAsString();
         TypeFactory mapCollectionType = mapper.getTypeFactory();
         PrivateChannelTO privateChannelTO = mapper.readValue(json, mapCollectionType.constructType(PrivateChannelTO.class));
-        Assert.assertTrue(privateChannelTO.isExists());
+        Assert.assertTrue(privateChannelTO.isAccepted());
 /*
         Assert.assertEquals(60, privateChannelTO.getToken().length()); todo restore after fixing token usage
 */
@@ -86,7 +86,7 @@ public class ChannelControllerTests {
                 .andExpect(jsonPath("$").isNotEmpty()).andReturn().getResponse().getContentAsString();
         TypeFactory mapCollectionType = mapper.getTypeFactory();
         PrivateChannelTO privateChannelTO = mapper.readValue(json, mapCollectionType.constructType(PrivateChannelTO.class));
-        Assert.assertTrue(privateChannelTO.isExists());
+        Assert.assertTrue(privateChannelTO.isAccepted());
 /*
         Assert.assertEquals(60, privateChannelTO.getToken().length()); todo restore after fixing token usage
 */

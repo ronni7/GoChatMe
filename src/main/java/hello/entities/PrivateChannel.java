@@ -15,11 +15,12 @@ public class PrivateChannel implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long channelID;
     private String token;
-    @OneToMany(mappedBy = "privateChannel", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "privateChannel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @NotFound(action = NotFoundAction.IGNORE)
     @JsonManagedReference
     @OrderBy
     private List<PrivateMessageOutput> messageList = new ArrayList<>();
+    private Boolean accepted = false;
 
     @Override
     public String toString() {
@@ -27,6 +28,7 @@ public class PrivateChannel implements Serializable {
                 "channelID=" + channelID +
                 ", token='" + token + '\'' +
                 ", messageList=" + messageList +
+                ", accepted=" + accepted +
                 '}';
     }
 
@@ -57,5 +59,12 @@ public class PrivateChannel implements Serializable {
         this.messageList = messageList;
     }
 
+    public Boolean getAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(Boolean accepted) {
+        this.accepted = accepted;
+    }
 }
 

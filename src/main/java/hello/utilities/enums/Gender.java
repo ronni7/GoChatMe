@@ -1,6 +1,6 @@
 package hello.utilities.enums;
 
-public enum GENDER {
+public enum Gender {
     MALE,
     FEMALE
 }

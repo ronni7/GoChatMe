@@ -4,16 +4,16 @@ import hello.utilities.enums.NotificationType;
 
 import java.io.Serializable;
 
-public class InvitationMessageOutputTO implements Serializable {
+public class InvitationAcceptedOutputMessageTO implements Serializable {
     private String from;
     private String body;
-    private String receiverID;
+    private Long receiverID;
     private NotificationType type;
 
-    public InvitationMessageOutputTO() {
+    public InvitationAcceptedOutputMessageTO() {
     }
 
-    public InvitationMessageOutputTO(String from, String body, String receiverID, NotificationType type) {
+    public InvitationAcceptedOutputMessageTO(String from, String body, Long receiverID, NotificationType type) {
         this.from = from;
         this.body = body;
         this.receiverID = receiverID;
@@ -36,11 +36,11 @@ public class InvitationMessageOutputTO implements Serializable {
         this.body = body;
     }
 
-    public String getReceiverID() {
+    public Long getReceiverID() {
         return receiverID;
     }
 
-    public void setReceiverID(String receiverID) {
+    public void setReceiverID(Long receiverID) {
         this.receiverID = receiverID;
     }
 
@@ -54,11 +54,11 @@ public class InvitationMessageOutputTO implements Serializable {
 
     @Override
     public String toString() {
-        return "InvitationMessageOutputTO{" +
+        return "InvitationAcceptedOutputMessageTO{" +
                 "from='" + from + '\'' +
-                ", token='" + body + '\'' +
-                ", receiverID='" + receiverID + '\'' +
-                ", type=" + type +
+                ", body='" + body + '\'' +
+                ", receiverID=" + receiverID +
+                ", notificationType=" + type +
                 '}';
     }
 }

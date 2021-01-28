@@ -2,6 +2,7 @@ package hello.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hello.entities.User;
+import hello.requestBody.LoginRequestBody;
 import hello.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -49,15 +50,16 @@ public class MainController {
 
     @PostMapping(path = "/login")
     public @ResponseBody
-    User logUserIn(@RequestParam String password, @RequestParam String login) {
-
-        return userService.logUserIn(login, password.toCharArray());
+    User logUserIn(@RequestBody LoginRequestBody loginRequestBody) {
+        if (loginRequestBody != null && loginRequestBody.getPassword() != null)
+            return userService.logUserIn(loginRequestBody.getLogin(), loginRequestBody.getPassword().toCharArray());
+        return null;// error handling
     }
 
     @PostMapping(path = "/register")
     public @ResponseBody
-    User registerNewUser(@RequestBody User u) {
-        return userService.registerNewUser(u);
+    User registerNewUser(@RequestBody User user) {
+        return userService.registerNewUser(user);
     }
 
 }

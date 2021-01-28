@@ -15,7 +15,7 @@ public class PrivateMessageOutput implements Serializable {
     private String sender;
     private String text;
     private String time;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "channelID")
     @JsonBackReference
     @NotFound(action = NotFoundAction.IGNORE)
