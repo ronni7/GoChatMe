@@ -2,9 +2,9 @@ package test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
-import hello.Application;
-import hello.DTO.MessageOutputDTO;
-import hello.TO.PrivateChannelTO;
+import gochatme.Application;
+import gochatme.DTO.MessageOutputDTO;
+import gochatme.TO.PrivateChannelTO;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
