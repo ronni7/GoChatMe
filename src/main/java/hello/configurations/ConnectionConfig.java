@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ConnectionConfig {
 
-
     @Bean
     public ServletWebServerFactory servletContainer() {
         TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
@@ -25,18 +24,18 @@ public class ConnectionConfig {
                 context.addConstraint(securityConstraint);
             }
         };
-    //    tomcat.addAdditionalTomcatConnectors(redirectConnector());
+        tomcat.addAdditionalTomcatConnectors(redirectConnector());
         return tomcat;
 
     }
 
-/*    private Connector redirectConnector() {
+    private Connector redirectConnector() {
         Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
         connector.setScheme("http");
         connector.setPort(8080);
         connector.setSecure(true);
         connector.setRedirectPort(8444);
         return connector;
-    }*/
+    }
 
 }

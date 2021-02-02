@@ -1,7 +1,6 @@
 package hello.TO;
 
 import hello.DTO.MessageOutputDTO;
-import hello.entities.PrivateMessageOutput;
 
 import java.io.Serializable;
 import java.util.List;

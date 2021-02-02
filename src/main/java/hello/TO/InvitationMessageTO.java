@@ -1,6 +1,5 @@
 package hello.TO;
 
-import hello.utilities.enums.MessageType;
 import hello.utilities.enums.NotificationType;
 
 public class InvitationMessageTO {

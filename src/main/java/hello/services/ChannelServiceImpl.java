@@ -29,7 +29,7 @@ public class ChannelServiceImpl implements ChannelService {
 
     @Override
     public List<Channel> getChannels() {
-        return channelRepository.findAll();
+        return (List<Channel>) channelRepository.findAll();
     }
 
     @Override
@@ -63,8 +63,6 @@ public class ChannelServiceImpl implements ChannelService {
 
     @Override
     public List<MessageOutputDTO> getChannelMessages(long channelID) {
-        /*String time = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date()); todo
-        SimpleDateFormat simpleDateFormat= new SimpleDateFormat("dd-MM-yyyy HH:mm");*/
         return convertToDTO(channelRepository.findById(channelID).get().getMessageList());
 
     }
