@@ -3,7 +3,6 @@ package hello.services;
 import hello.DTO.MessageOutputDTO;
 import hello.TO.*;
 import hello.entities.MessageOutput;
-import hello.entities.PrivateChannel;
 import hello.entities.PrivateMessageOutput;
 import hello.exceptions.ResourceNotFoundException;
 import hello.repositories.ChannelRepository;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 @Component

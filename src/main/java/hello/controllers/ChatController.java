@@ -1,10 +1,8 @@
 package hello.controllers;
 
-
 import hello.DTO.MessageOutputDTO;
 import hello.TO.*;
 import hello.services.ChatServiceImpl;
-import hello.services.UserServiceImpl;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -17,11 +15,9 @@ import org.springframework.stereotype.Controller;
 public class ChatController {
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final ChatServiceImpl chatService;
-    private final UserServiceImpl userService;
 
-    public ChatController(ChatServiceImpl chatService, UserServiceImpl userService, SimpMessagingTemplate simpMessagingTemplate) {
+    public ChatController(ChatServiceImpl chatService, SimpMessagingTemplate simpMessagingTemplate) {
         this.chatService = chatService;
-        this.userService = userService;
         this.simpMessagingTemplate = simpMessagingTemplate;
     }
 
@@ -54,7 +50,6 @@ public class ChatController {
     public void dispatchInvitation(@DestinationVariable long senderID, InvitationMessageTO invitationMessageTO) {
         InvitationMessageOutputTO invitationMessageOutputTO = chatService.dispatchInvitation(senderID, invitationMessageTO);
         simpMessagingTemplate.convertAndSend("/chatroom/notifications/" + invitationMessageOutputTO.getReceiverID() + "/", invitationMessageOutputTO);
-
     }
 
     @MessageMapping("/chat/notifications/accepted/{senderID}")
@@ -62,7 +57,6 @@ public class ChatController {
     public void dispatchInvitationAccepted(InvitationAcceptedMessageTO invitationAcceptedMessageTO) {
         InvitationAcceptedOutputMessageTO invitationAcceptedOutputMessageTO = chatService.dispatchAcceptedInvitation(invitationAcceptedMessageTO);
         simpMessagingTemplate.convertAndSend("/chatroom/notifications/" + invitationAcceptedOutputMessageTO.getReceiverID() + "/", invitationAcceptedOutputMessageTO);
-
     }
 
 }

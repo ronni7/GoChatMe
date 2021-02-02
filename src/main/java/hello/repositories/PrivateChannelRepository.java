@@ -1,7 +1,6 @@
 package hello.repositories;
 
 import hello.entities.PrivateChannel;
-import hello.entities.PrivateMessageOutput;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
