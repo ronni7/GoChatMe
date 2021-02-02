@@ -14,7 +14,7 @@ public class Channel implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long channelID;
     private String name;
-    @OneToMany(mappedBy = "channel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "channel", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @NotFound(action = NotFoundAction.IGNORE)
     @JsonManagedReference
     @OrderBy

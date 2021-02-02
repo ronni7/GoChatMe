@@ -6,12 +6,14 @@ import hello.entities.Channel;
 import hello.entities.MessageOutput;
 import hello.entities.PrivateChannel;
 import hello.entities.PrivateMessageOutput;
+import hello.exceptions.ResourceNotFoundException;
 import hello.repositories.ChannelRepository;
 import hello.repositories.PrivateChannelRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class ChannelServiceImpl implements ChannelService {
@@ -27,7 +29,7 @@ public class ChannelServiceImpl implements ChannelService {
 
     @Override
     public List<Channel> getChannels() {
-        return channelRepository.findAll();
+        return (List<Channel>) channelRepository.findAll();
     }
 
     @Override
@@ -38,21 +40,29 @@ public class ChannelServiceImpl implements ChannelService {
             senderID = user2ID;
             user2ID = temp;
         }
-        for (PrivateChannel p : privateChannelRepository.findAll())
-            /*if (BCrypt.checkpw(senderID + user2ID, String.valueOf(p.getToken())))*/ //TODO encrypted chatroom token handling
-            if (("token" + senderID + user2ID).equals(p.getToken()))
-                return new PrivateChannelTO(p.getChannelID(), p.getToken(), true);
-        PrivateChannel privateChannel = new PrivateChannel();
-        String token = "token" + senderID + user2ID;
-        privateChannel.setToken(token);
-        privateChannel = privateChannelRepository.save(privateChannel);
-        return new PrivateChannelTO(privateChannel.getChannelID(), privateChannel.getToken(), false);
+        final String token = "token" + senderID + user2ID;
+        Optional<PrivateChannel> optional = privateChannelRepository.findByToken(token);
+        PrivateChannel privateChannel;
+        if (optional.isPresent()) {
+            privateChannel = optional.get();
+        } else {
+            privateChannel = new PrivateChannel();
+            privateChannel.setToken(token);
+            privateChannel.setAccepted(false);
+            privateChannel = privateChannelRepository.save(privateChannel);
+        }
+        return new PrivateChannelTO(privateChannel.getChannelID(), privateChannel.getToken(), privateChannel.getAccepted(), convertPrivateToDTO(privateChannel.getMessageList()));
+    }
+
+    @Override
+    public void accept(String token) {
+        PrivateChannel privateChannel = privateChannelRepository.findByToken(token).orElseThrow((ResourceNotFoundException::new));
+        privateChannel.setAccepted(true);
+        privateChannelRepository.save(privateChannel);
     }
 
     @Override
     public List<MessageOutputDTO> getChannelMessages(long channelID) {
-        /*String time = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date()); todo
-        SimpleDateFormat simpleDateFormat= new SimpleDateFormat("dd-MM-yyyy HH:mm");*/
         return convertToDTO(channelRepository.findById(channelID).get().getMessageList());
 
     }

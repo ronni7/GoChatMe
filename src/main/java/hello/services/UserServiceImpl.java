@@ -1,5 +1,6 @@
 package hello.services;
 
+import hello.entities.SocialUser;
 import hello.entities.User;
 import hello.repositories.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -18,15 +19,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAll() {
-        return userRepository.findAll();
+        return (List<User>) userRepository.findAll();
     }
 
     @Override
-    public User registerNewUser(User u) {
-        if (userRepository.findByLogin(u.getLogin()).size() == 1 || userRepository.findByNickname(u.getNickname()).size() == 1)
+    public User registerNewUser(User user) {
+        if (userRepository.findByLogin(user.getLogin()).size() == 1 || userRepository.findByNickname(user.getNickname()).size() == 1)
             return new User();
-        u.setPassword(BCrypt.hashpw(String.valueOf(u.getPassword()), BCrypt.gensalt()).toCharArray());
-        return userRepository.save(u);
+        user.setPassword(BCrypt.hashpw(String.valueOf(user.getPassword()), BCrypt.gensalt()).toCharArray());
+        return userRepository.save(user);
 
     }
 
@@ -40,11 +41,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User logUserIn(String login, char[] password) {
-
         ArrayList<User> list = new ArrayList<>(userRepository.findByLogin(login));
-        for (User u : list)
-            if (BCrypt.checkpw(String.valueOf(password), String.valueOf(u.getPassword())))
-                return u;
+        for (User user : list)
+            if (BCrypt.checkpw(String.valueOf(password), String.valueOf(user.getPassword())))
+                return user;
         return null;
     }
 
@@ -56,5 +56,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findUsersByName(String name) {
         return userRepository.findByNicknameContains(name);
+    }
+
+    @Override
+    public User verifyExternalAccount(SocialUser socialUser) {
+        ArrayList<User> list = new ArrayList<>(userRepository.findByLogin(socialUser.getEmail()));
+        for (User user : list) {
+            if (user.equalsSocialUser(socialUser)) {
+                user.synchronize(socialUser);
+                return user;
+            }
+        }
+        User registeredUser = socialUser.toUser();
+        registeredUser.setPassword(BCrypt.hashpw(registeredUser.getEmail(), BCrypt.gensalt()).toCharArray());
+        return userRepository.save(registeredUser);
     }
 }

@@ -1,9 +1,7 @@
 package hello.services;
 
-import hello.TO.InvitationMessageTO;
-import hello.TO.InvitationMessageOutputTO;
-import hello.TO.MessageTO;
 import hello.DTO.MessageOutputDTO;
+import hello.TO.*;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 
 public interface ChatService {
@@ -14,4 +12,6 @@ public interface ChatService {
     MessageOutputDTO sendGreeting(SimpMessageHeaderAccessor headerAccessor);
 
     InvitationMessageOutputTO dispatchInvitation(long senderID, InvitationMessageTO invitationMessageTO);
+
+    InvitationAcceptedOutputMessageTO dispatchAcceptedInvitation(InvitationAcceptedMessageTO invitationAcceptedMessageTO);
 }

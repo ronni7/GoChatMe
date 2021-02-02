@@ -1,7 +1,5 @@
 package hello.entities;
 
-import hello.utilities.enums.GENDER;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,7 +21,6 @@ public class User implements Serializable {
     private String nickname;
     private char[] password;
     private String email;
-    private GENDER sex;
 
     public Long getId() {
         return id;
@@ -73,22 +70,13 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public GENDER getSex() {
-        return sex;
-    }
-
-    public void setSex(GENDER sex) {
-        this.sex = sex;
-    }
-
-    public User(String name, String surname, String login, String nickname, char[] password, String email, GENDER sex) {
+    public User(String name, String surname, String login, String nickname, char[] password, String email) {
         this.name = name;
         this.surname = surname;
         this.login = login;
         this.nickname = nickname;
         this.password = password;
         this.email = email;
-        this.sex = sex;
     }
 
     @Override
@@ -101,7 +89,6 @@ public class User implements Serializable {
                 ", nickname='" + nickname + '\'' +
                 ", password=" + Arrays.toString(password) +
                 ", email='" + email + '\'' +
-                ", sex=" + sex +
                 '}';
     }
 
@@ -111,6 +98,19 @@ public class User implements Serializable {
 
     public void setPassword(char[] password) {
         this.password = password;
+    }
+
+    public boolean equalsSocialUser(SocialUser socialUser) {
+        if (!this.getLogin().equals(socialUser.getEmail()))
+            return false;
+        return this.getEmail().equals(socialUser.getEmail());
+    }
+
+    public void synchronize(SocialUser socialUser) {
+        User newUser = socialUser.toUser();
+        this.setName(newUser.getName());
+        this.setSurname(newUser.getSurname());
+        this.setNickname(newUser.getNickname());
     }
 }
 

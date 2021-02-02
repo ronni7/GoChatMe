@@ -13,6 +13,8 @@ public interface ChannelService {
 
     PrivateChannelTO createPrivateChannel(long senderID, String destinationUserNickname);
 
+    void accept(String token);
+
     List<MessageOutputDTO> getPrivateChannelMessages(long channelID);
 
     Channel addChannel(Channel channel);

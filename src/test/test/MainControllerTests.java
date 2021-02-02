@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import hello.Application;
 import hello.entities.User;
-import hello.utilities.enums.GENDER;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
@@ -15,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
+
 import javax.transaction.Transactional;
 import java.util.LinkedHashMap;
 
@@ -30,10 +30,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 public class MainControllerTests {
 
- @Autowired
+    @Autowired
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper mapper;
+
     @Test
     public void ShouldReturnUser() throws Exception {
         User user = new User(
@@ -42,8 +43,7 @@ public class MainControllerTests {
                 "SpecjalnyTestowy",
                 "Nickname",
                 "hasloJestTajne".toCharArray(),
-                "emaissl@johnny.com",
-                GENDER.MALE
+                "emaissl@johnny.com"
 
         );
         mockMvc.perform(post("https://localhost:8444/goChatMe/register").contentType(MediaType.APPLICATION_JSON)
@@ -53,24 +53,26 @@ public class MainControllerTests {
 
 
     }
+
     @Test
     public void ShouldReturnAllUsers() throws Exception {
 
         this.mockMvc.perform(get("https://localhost:8444/goChatMe/all"))
-                              .andDo(print()).andExpect(status().isOk());
+                .andDo(print()).andExpect(status().isOk());
 
     }
+
     @Test
     public void ShouldReturnTrueWhenUserHasBeenLoggedSuccessfully() throws Exception {
 
-        String json =  this.mockMvc.perform(post("https://localhost:8444/goChatMe/login")
+        String json = this.mockMvc.perform(post("https://localhost:8444/goChatMe/login")
                 .param("password", "TajneHaslo1")
                 .param("login", "login"))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(jsonPath("$").isNotEmpty()).andReturn().getResponse().getContentAsString();
         TypeFactory mapCollectionType;
         mapCollectionType = mapper.getTypeFactory();
-        User user =  mapper.readValue(json, mapCollectionType.constructType(User.class));
+        User user = mapper.readValue(json, mapCollectionType.constructType(User.class));
         Assert.assertEquals(1, (long) user.getId());
 
     }

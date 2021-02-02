@@ -1,13 +1,12 @@
 package hello.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hello.entities.SocialUser;
 import hello.entities.User;
+import hello.requestBody.LoginRequestBody;
 import hello.services.UserServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-
 
 @RestController
 @RequestMapping(path = "/goChatMe")
@@ -20,19 +19,6 @@ public class MainController {
     public MainController(UserServiceImpl userService, ObjectMapper objectMapper) {
         this.userService = userService;
         this.objectMapper = objectMapper;
-    }
-
-    @GetMapping(path = "/hello")
-    public @ResponseBody
-    String hello() {
-        return "Hello World";
-    }
-
-    @Deprecated
-    @GetMapping(path = "/all")
-    public @ResponseBody
-    List<User> getAllUsers() {
-        return userService.findAll();
     }
 
     @GetMapping(path = "/users")
@@ -49,15 +35,23 @@ public class MainController {
 
     @PostMapping(path = "/login")
     public @ResponseBody
-    User logUserIn(@RequestParam String password, @RequestParam String login) {
-
-        return userService.logUserIn(login, password.toCharArray());
+    User logUserIn(@RequestBody LoginRequestBody loginRequestBody) {
+        if (loginRequestBody != null && loginRequestBody.getPassword() != null) {
+            return userService.logUserIn(loginRequestBody.getLogin(), loginRequestBody.getPassword().toCharArray());
+        }
+        return null;
     }
 
     @PostMapping(path = "/register")
     public @ResponseBody
-    User registerNewUser(@RequestBody User u) {
-        return userService.registerNewUser(u);
+    User registerNewUser(@RequestBody User user) {
+        return userService.registerNewUser(user);
+    }
+
+    @PostMapping(path = "/verifyExternalAccount")
+    public @ResponseBody
+    User verifyExternalAccount(@RequestBody SocialUser socialUser) {
+        return userService.verifyExternalAccount(socialUser);
     }
 
 }

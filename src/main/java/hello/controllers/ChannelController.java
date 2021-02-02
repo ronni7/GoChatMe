@@ -3,6 +3,7 @@ package hello.controllers;
 import hello.DTO.MessageOutputDTO;
 import hello.TO.PrivateChannelTO;
 import hello.entities.Channel;
+import hello.requestBody.CreatePrivateChannelRequestBody;
 import hello.services.ChannelServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +35,8 @@ public class ChannelController {
     List<Channel> getChannels() {
         return channelService.getChannels();
     }
-@GetMapping(path = "/channelsByName")
+
+    @GetMapping(path = "/channelsByName")
     public @ResponseBody
     List<Channel> getChannelsByName(@RequestParam String name) {
         return channelService.getChannelsByName(name);
@@ -42,14 +44,19 @@ public class ChannelController {
 
     @PostMapping(path = "/createPrivateChannel")
     public @ResponseBody
-    PrivateChannelTO createPrivateChannel(long senderID, String destinationUserNickname) {
-        return channelService.createPrivateChannel(senderID, destinationUserNickname);
+    PrivateChannelTO createPrivateChannel(@RequestBody CreatePrivateChannelRequestBody createPrivateChannelRequestBody) {
+        return channelService.createPrivateChannel(createPrivateChannelRequestBody.getSenderID(), createPrivateChannelRequestBody.getDestinationUserNickname());
     }
 
     @PostMapping(path = "/addChannel")
     public @ResponseBody
     Channel addChannel(@RequestBody Channel channel) {
         return channelService.addChannel(channel);
+    }
+    @PostMapping(path = "/accept")
+    public @ResponseBody
+    void accept(@RequestBody String token) {
+        channelService.accept(token);
     }
 
 }
